@@ -42,6 +42,19 @@ function! Svn_diff_windows()
 
     let list_of_files = join(files, ' ')
 
+    set nosplitright
+
+    vnew
+    silent! setlocal ft=diff previewwindow bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
+    execute 'normal :r!LANG=ja_JP.UTF8 svn diff ' . list_of_files . "\n"
+    setlocal nomodifiable
+    goto 1
+    redraw!
+    wincmd R
+    wincmd p
+    goto 1
+    redraw!
+
     new
     silent! setlocal ft=diff previewwindow bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
 
@@ -50,7 +63,6 @@ function! Svn_diff_windows()
       execute 'normal :r!LANG=ja_JP.UTF8 svn log -r PREV:HEAD --limit=1 ' . file . "\n"
     endfor
 
-    execute 'normal :r!LANG=ja_JP.UTF8 svn diff ' . list_of_files . "\n"
     setlocal nomodifiable
     goto 1
     redraw!
