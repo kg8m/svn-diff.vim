@@ -1,3 +1,4 @@
+" modified as http://d.hatena.ne.jp/tekiomo/20110123/1294746063
 " made by Michael Scherer ( misc@mandrake.org )
 " $Id: svn.vim 282 2005-01-31 21:24:55Z misc $
 "
@@ -22,26 +23,34 @@
 
 function! Svn_diff_windows()
     let i = 0
-    let list_of_files = ''
+    let files = []
 
     while i <= line('$')
         let line = getline(i)
         if line =~ '^M'
 
             let file = substitute(line, '\v^MM?\s*(.*)\s*$', '\1', '')
-            let list_of_files = list_of_files . ' '.file
+            call add(files, file)
         endif
 
         let i = i + 1
     endwhile
 
-    if list_of_files == ""
+    if len(files) == 0
         return
     endif
 
+    let list_of_files = join(files, ' ')
+
     new
     silent! setlocal ft=diff previewwindow bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
-    exe 'normal :r!LANG=C svn diff ' . list_of_files . "\n"
+
+    for file in files
+      execute 'normal :r!LANG=ja_JP.UTF8 svn info ' . file . " | grep 'URL:'\n"
+      execute 'normal :r!LANG=ja_JP.UTF8 svn log -r PREV:HEAD --limit=1 ' . file . "\n"
+    endfor
+
+    execute 'normal :r!LANG=ja_JP.UTF8 svn diff ' . list_of_files . "\n"
     setlocal nomodifiable
     goto 1
     redraw!
