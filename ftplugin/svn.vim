@@ -55,21 +55,17 @@ function! Svn_diff_windows()
     goto 1
     redraw!
 
-    " new
-    " silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
-
-    " for file in files
-    "   execute 'normal :r!LANG=ja_JP.UTF8 svn info ' . file . " | grep 'URL:'\n"
-    "   execute 'normal :r!LANG=ja_JP.UTF8 svn log -r PREV:HEAD --limit=1 ' . file . "\n"
-    " endfor
-
-    " setlocal nomodifiable
-    " goto 1
-    " redraw!
-    " wincmd R
-    " wincmd p
-    " goto 1
-    " redraw!
+    new
+    silent! setlocal ft=log bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
+    execute 'normal :r!LANG=ja_JP.UTF8 svn info ' . " | grep 'URL:'\n"
+    execute 'normal :r!LANG=ja_JP.UTF8 svn log --limit 15 -r HEAD:1' . "\n"
+    setlocal nomodifiable
+    goto 1
+    redraw!
+    wincmd R
+    wincmd p
+    goto 1
+    redraw!
 endfunction
 
 set nowarn
