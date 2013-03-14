@@ -45,7 +45,7 @@ function! Svn_diff_windows()
     set nosplitright
 
     vnew
-    silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
+    silent! setlocal ft=diff bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
     execute 'normal :r!LANG=ja_JP.UTF8 svn diff ' . list_of_files . "\n"
     setlocal nomodifiable
     goto 1
@@ -56,7 +56,7 @@ function! Svn_diff_windows()
     redraw!
 
     new
-    silent! setlocal ft=log bufhidden=delete nobackup noswf nobuflisted nowrap buftype=nofile
+    silent! setlocal ft=log bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
     execute 'normal :r!LANG=ja_JP.UTF8 svn info ' . " | grep 'URL:'\n"
     execute 'normal :r!LANG=ja_JP.UTF8 svn log --limit 15 -r HEAD:1' . "\n"
     setlocal nomodifiable
