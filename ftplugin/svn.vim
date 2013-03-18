@@ -36,10 +36,6 @@ function! Svn_diff_windows()
         let i = i + 1
     endwhile
 
-    if len(files) == 0
-        return
-    endif
-
     let list_of_files = join(files, ' ')
 
     set nosplitright
