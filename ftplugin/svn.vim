@@ -22,6 +22,12 @@
 " to use it, place it in ~/.vim/ftplugins ( create the directory if it doesn't exist )
 
 function! Svn_diff_windows()
+    if exists("w:svn_diff_opend") && w:svn_diff_opend
+      return
+    endif
+
+    let w:svn_diff_opend = 1
+
     let i = 0
     let files = []
 
