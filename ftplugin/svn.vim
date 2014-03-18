@@ -60,7 +60,7 @@ function! Svn_diff_windows()
     new
     silent! setlocal ft=log bufhidden=delete nobackup noswf nobuflisted wrap buftype=nofile
     execute 'normal :r!LANG=ja_JP.UTF8 svn info ' . " | grep 'URL:'\n"
-    execute 'normal :r!LANG=ja_JP.UTF8 svn log --limit 15 -r HEAD:1' . "\n"
+    execute 'normal :r!LANG=ja_JP.UTF8 svn log --limit 15 -r HEAD:1 --stop-on-copy' . "\n"
     setlocal nomodifiable
     goto 1
     redraw!
